@@ -42,7 +42,6 @@ export const StockfishVsStockfish = ({
   playerColor: "white" | "black";
   opponentNft: SimpleHashResponseType["nfts"][number];
 }) => {
-  console.log("opponentNft", opponentNft);
   const engine = useMemo(() => new ChessEngine(), []);
   const game = useMemo(() => new Chess(), []);
 
