@@ -16,10 +16,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Addreth } from "addreth";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useNetwork } from "wagmi";
 import { useTokenBoundAccount } from "~/hooks/use-token-bound-account";
-import { useTokenBoundClient } from "~/hooks/use-token-bound-client";
 import { api } from "~/trpc/react";
 import { type SimpleHashResponseType } from "~/types/simple-hash";
 
@@ -32,8 +32,7 @@ export const TokenBoundModal = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoading, tokenboundAccount } = useTokenBoundAccount(nft);
-  const { isLoading: isLoadingClient, tokenBoundClient } =
-    useTokenBoundClient();
+
   const { chain } = useNetwork();
   const { data, isLoading: isLoadingAccountNft } = api.nft.getUserNft.useQuery(
     { address: tokenboundAccount, chainId: chain?.id ?? 1 },
@@ -41,15 +40,10 @@ export const TokenBoundModal = ({
       enabled: !isLoading && !!chain?.id && isOpen,
     },
   );
+  const router = useRouter();
 
-  const createAccount = async () => {
-    if (isLoadingClient || !tokenBoundClient) {
-      return;
-    }
-    await tokenBoundClient.createAccount({
-      tokenContract: nft.contract_address as `0x${string}`,
-      tokenId: nft.token_id,
-    });
+  const createAccount = () => {
+    router.push(`/${nft.contract_address}/${nft.token_id}`);
   };
 
   const nfts = data?.nfts;
@@ -63,7 +57,7 @@ export const TokenBoundModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign={"center"}>
-            {nft.name ?? nft.collection.name}
+            {nft.name ?? `${nft.collection.name} ${nft.token_id}`}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -105,7 +99,7 @@ export const TokenBoundModal = ({
                       alignItems={"center"}
                     >
                       <CardHeader className="truncate" w="64">
-                        {nft.name ?? nft.collection.name}
+                        {nft.name ?? `${nft.collection.name} ${nft.token_id}`}
                       </CardHeader>
                       <CardBody>
                         <Image

@@ -71,7 +71,7 @@ export const AccountSelection = () => {
                 alignItems={"center"}
               >
                 <CardHeader className="truncate" w="64">
-                  {nft.name ?? nft.collection.name}
+                  {nft.name ?? `${nft.collection.name} ${nft.token_id}`}
                 </CardHeader>
                 <CardBody>
                   <Image

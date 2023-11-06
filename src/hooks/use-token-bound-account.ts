@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { type SimpleHashResponseType } from "~/types/simple-hash";
 import { useTokenBoundClient } from "./use-token-bound-client";
 
-export const useTokenBoundAccount = (
-  nft: SimpleHashResponseType["nfts"][number],
-) => {
+export const useTokenBoundAccount = (nft: {
+  contract_address: string;
+  token_id: string;
+}) => {
   const { isLoading, tokenBoundClient } = useTokenBoundClient();
   const [tokenboundAccount, setTokenboundAccount] =
     useState<`0x${string}`>("0x");

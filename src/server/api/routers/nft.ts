@@ -49,4 +49,28 @@ export const nftRouter = createTRPCRouter({
       });
       return metadata.json();
     }),
+  getNftByToken: publicProcedure
+    .input(
+      z.object({
+        chainId: z.number(),
+        tokenId: z.string(),
+        contractAddress: z.string(),
+      }),
+    )
+    .query(
+      async ({ input }): Promise<SimpleHashResponseType["nfts"][number]> => {
+        const baseUrl = new URL(
+          `https://api.simplehash.com/api/v0/nfts/${
+            chainIdToSimpleHashName[input.chainId as 80001]
+          }/${input.contractAddress}/${input.tokenId} `,
+        );
+
+        const metadata = await fetch(baseUrl.href, {
+          headers: {
+            "X-API-KEY": env.SIMPLE_HASH_API_KEY,
+          },
+        });
+        return metadata.json();
+      },
+    ),
 });
