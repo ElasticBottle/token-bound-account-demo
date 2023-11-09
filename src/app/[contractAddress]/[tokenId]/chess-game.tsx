@@ -3,6 +3,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   Modal,
   ModalBody,
@@ -11,12 +12,15 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Chess } from "chess.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Chessboard } from "react-chessboard";
 import { type CustomPieces } from "react-chessboard/dist/chessboard/types";
+import { useTokenBoundAccount } from "~/hooks/use-token-bound-account";
+import { api } from "~/trpc/react";
 import { type SimpleHashResponseType } from "~/types/simple-hash";
 import { ChessEngine } from "./chess-engine";
 
@@ -73,6 +77,20 @@ export const StockfishVsStockfish = ({
       opponentNft.name ?? `${opponentNft.contract.name} ${opponentNft.token_id}`
     }`;
   }
+  const { tokenboundAccount } = useTokenBoundAccount({
+    contract_address: opponentNft.contract_address,
+    token_id: opponentNft.token_id,
+  });
+
+  const { data, isLoading } = api.nft.getUserNft.useQuery(
+    {
+      address: tokenboundAccount,
+      chainId: 1,
+    },
+    {
+      enabled: tokenboundAccount !== "0x",
+    },
+  );
 
   const customPieces = useMemo((): CustomPieces => {
     const pieceComponents: CustomPieces = {};
@@ -125,6 +143,14 @@ export const StockfishVsStockfish = ({
       onOpen();
     }
   }, [chessBoardPosition, findBestMove, game, onOpen]);
+
+  if (isLoading) {
+    return (
+      <Center minH="100vh">
+        <Skeleton w="full" h="80vh" />
+      </Center>
+    );
+  }
 
   return (
     <>
