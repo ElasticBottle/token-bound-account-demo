@@ -1,28 +1,22 @@
-# Create T3 App
+# Token bound account demo game
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a token bound account demo showing off how you can use token bound accounts for a PvP game.
 
-## What's next? How do I make an app with this?
+![token bound game demo](https://github.com/joinfirexyz/fire-extension/assets/44563205/18fcf457-c600-4037-af66-8005c7613d77)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- Choose your game account based on existing NFTs
+- Compete against other NFTs
+- Strength of account depend on TBA NFT holdings
+- Full stockfish chess game engine
+- Winning or losing mints an NFT that helps // hurts your account respectively (To be implemented)
+
+## Tech stack
 
 - [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
+- [Connectkit](https://docs.family.co/connectkit)
+- [Wagmi](https://wagmi.sh/)
+- [Token bound SDK](https://tokenbound.org/)
+- [Chakra](https://chakra-ui.com/)
 - [tRPC](https://trpc.io)
-
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
